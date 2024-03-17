@@ -1,4 +1,6 @@
+import { useEffect, useRef } from "react"
 import "./ContextMenu.css"
+import { typeContextMenuState, typeContextMenuButton } from "./ContextMenuTypes"
 
 type typeContextMenuProps = {
     rightClickedItem: any,
@@ -6,7 +8,7 @@ type typeContextMenuProps = {
     positionY: number,
     isToggled: boolean,
     buttons: any,
-    contextMenuRef: any
+    onClearContextMenu: any
 }
 
 export default function ContextMenu({
@@ -15,7 +17,31 @@ export default function ContextMenu({
     positionY,
     isToggled,
     buttons,
-    contextMenuRef }: typeContextMenuProps) {
+    onClearContextMenu }: typeContextMenuProps) {
+
+    const contextMenuRef = useRef(null)
+
+    function resetContextMenu() {
+        console.log("Got to resetContextMenu")
+        onClearContextMenu({ position: { x: 0, y: 0 }, toggled: false })
+    }
+
+    useEffect(
+        function render() {
+
+            function handleOffClick(e: MouseEvent) {
+                if (contextMenuRef) {
+                    if (contextMenuRef.current.contains(e.target) == false) { resetContextMenu() }
+                }
+            }
+
+            window.addEventListener("click", handleOffClick)
+
+            return function cleanUp() {
+                window.removeEventListener("click", handleOffClick)
+            }
+        },
+        [/*Dependencies*/])
 
     return <menu
         ref={contextMenuRef}
@@ -29,6 +55,7 @@ export default function ContextMenu({
             function handleClick(e: React.MouseEvent) {
                 e.stopPropagation()
                 button.onClick(e, rightClickedItem)
+                resetContextMenu();
             }
 
             return <button

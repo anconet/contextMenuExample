@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 import "./global.css";
 import ContextMenu from "./contextMenu/ContextMenu";
-import { stringify } from "querystring";
+import { typeContextMenuState, typeContextMenuButton } from "./contextMenu/ContextMenuTypes";
 
 export default function App() {
 
@@ -23,13 +23,6 @@ export default function App() {
     // ------------------------------------------------------------------------------
     // Context Menu Config:
 
-    const contextMenuRef = useRef(null);
-
-    type typeContextMenuState = {
-        position: { x: number, y: number },
-        toggled: boolean
-    }
-
     const initialContextMenuState: typeContextMenuState = {
         position: { x: 0, y: 0 },
         toggled: false
@@ -39,45 +32,40 @@ export default function App() {
 
     function handleOnContextMenu(e: React.MouseEvent, rightClickedPerson: typePerson) {
         e.preventDefault()
-        const contextMenuAttr = contextMenuRef.current.getBoundingClientRect()
         const mouseClickX = e.clientX
         const mouseClickY = e.clientY
 
         const newContextMenuState: typeContextMenuState = { position: { x: mouseClickX, y: mouseClickY }, toggled: true }
         setContextMenuState(newContextMenuState)
         console.log("Right Click", rightClickedPerson.name)
-        console.log(contextMenuAttr)
+        //console.log(contextMenuAttr)
     }
 
-    type typeContextMenuButton = { text: string, onClick: any }
-
-    function resetContextMenu() {
-        setContextMenuState({ position: { x: 0, y: 0 }, toggled: false })
+    function handleClearContextMenuState(newContextMenuState: typeContextMenuState) {
+        console.log("Got to handleClearContextMenuState")
+        setContextMenuState(newContextMenuState)
     }
 
     const buttons: typeContextMenuButton[] = [
-        { text: "Insert Task Above", onClick: () => { console.log("Click 0"), resetContextMenu() } },
-        { text: "Insert Task Below", onClick: () => { console.log("Click 1"), resetContextMenu() } },
-        { text: "Edit Task", onClick: () => { console.log("Click 2"), resetContextMenu() } },
-        { text: "Delete Task", onClick: () => { console.log("Click 3"), resetContextMenu() } }
+        { text: "Insert Task Above", onClick: () => { console.log("Click 0") } },
+        { text: "Insert Task Below", onClick: () => { console.log("Click 1") } },
+        { text: "Edit Task", onClick: () => { console.log("Click 2") } },
+        { text: "Delete Task", onClick: () => { console.log("Click 3") } }
     ]
 
-    useEffect(
-        function render() {
+    function possibleContextMenu(): React.JSX.Element {
+        if (contextMenuState.toggled == true) {
+            return <ContextMenu
+                isToggled={contextMenuState.toggled}
+                positionX={contextMenuState.position.x}
+                positionY={contextMenuState.position.y}
+                buttons={buttons}
+                onClearContextMenu={handleClearContextMenuState}
+                rightClickedItem={""}
+            ></ContextMenu>
+        }
 
-            function handleOffClick(e: MouseEvent) {
-                if (contextMenuRef) {
-                    if (contextMenuRef.current.contains(e.target) == false) { resetContextMenu() }
-                }
-            }
-
-            window.addEventListener("click", handleOffClick)
-
-            return function cleanUp() {
-                window.removeEventListener("click", handleOffClick)
-            }
-        },
-        [/*Dependencies*/])
+    }
 
     return <div>
         <ul>{people.map((person, index) => {
@@ -88,13 +76,6 @@ export default function App() {
                 {person.name}</li>
         })}
         </ul>
-        <ContextMenu
-            contextMenuRef={contextMenuRef}
-            isToggled={contextMenuState.toggled}
-            positionX={contextMenuState.position.x}
-            positionY={contextMenuState.position.y}
-            buttons={buttons}
-            rightClickedItem={""}
-        ></ContextMenu>
+        {possibleContextMenu()}
     </div>
 }
