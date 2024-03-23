@@ -8,7 +8,7 @@ export default function useContextMenu(): typeUseContextMenuReturn {
         toggled: false
     }
 
-    function clearContextMenuState(): void {
+    function clearContextMenu(): void {
         setContextMenuState(initialContextMenuState)
     }
 
@@ -21,7 +21,7 @@ export default function useContextMenu(): typeUseContextMenuReturn {
 
     return [
         renderContextMenu,
-        clearContextMenuState,
+        clearContextMenu,
         contextMenuState
     ]
 }

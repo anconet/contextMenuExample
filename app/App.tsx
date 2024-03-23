@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 import "./global.css";
 import ContextMenu from "./contextMenu/ContextMenu";
-import { typeContextMenuState, typeContextMenuButton, typeUseContextMenuReturn } from "./contextMenu/ContextMenuTypes";
+import { typeContextMenuButton } from "./contextMenu/ContextMenuTypes";
 import useContextMenu from "./contextMenu/useContextMenu";
 
 export default function App() {
@@ -25,15 +25,15 @@ export default function App() {
     // Context Menu Config:
 
     const [
-        renderContextMenuState,
-        clearContextMenuState,
+        renderContextMenu,
+        clearContextMenu,
         contextMenuState] = useContextMenu();
 
     function handleOnContextMenu(e: React.MouseEvent, rightClickedPerson: typePerson) {
         e.preventDefault()
         const mouseClickX = e.clientX
         const mouseClickY = e.clientY
-        renderContextMenuState(mouseClickX, mouseClickY)
+        renderContextMenu(mouseClickX, mouseClickY)
         console.log(mouseClickX, mouseClickY)
     }
 
@@ -49,7 +49,7 @@ export default function App() {
             return <ContextMenu
                 contextMenuState={contextMenuState}
                 buttons={buttons}
-                onClearContextMenu={clearContextMenuState}
+                onClearContextMenu={clearContextMenu}
                 rightClickedItem={""}
             ></ContextMenu>
         }
