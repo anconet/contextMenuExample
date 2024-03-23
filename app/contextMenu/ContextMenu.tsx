@@ -4,18 +4,14 @@ import { typeContextMenuState, typeContextMenuButton } from "./ContextMenuTypes"
 
 type typeContextMenuProps = {
     rightClickedItem: any,
-    positionX: number,
-    positionY: number,
-    isToggled: boolean,
-    buttons: any,
+    contextMenuState: typeContextMenuState
+    buttons: typeContextMenuButton[],
     onClearContextMenu: any
 }
 
 export default function ContextMenu({
     rightClickedItem,
-    positionX,
-    positionY,
-    isToggled,
+    contextMenuState,
     buttons,
     onClearContextMenu }: typeContextMenuProps) {
 
@@ -46,16 +42,17 @@ export default function ContextMenu({
     return <menu
         ref={contextMenuRef}
         style={{
-            top: positionY + 2 + "px",
-            left: positionX + 2 + "px"
+            top: contextMenuState.position.y + 2 + "px",
+            left: contextMenuState.position.x + 2 + "px"
         }}
-        className={`context-menu ${isToggled ? "active" : ""}`}>
+        className={`context-menu ${contextMenuState.toggled ? "active" : ""}`}>
+
         {buttons.map((button, index: number) => {
 
             function handleClick(e: React.MouseEvent) {
                 e.stopPropagation()
-                button.onClick(e, rightClickedItem)
                 resetContextMenu();
+                button.onClick(e, rightClickedItem)
             }
 
             return <button

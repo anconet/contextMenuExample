@@ -3,4 +3,14 @@ export type typeContextMenuState = {
     toggled: boolean
 }
 
-export type typeContextMenuButton = { text: string, onClick: any }
+export type typeContextMenuButton = {
+    text: string,
+    onClick: (
+        e: React.MouseEvent,
+        rightClickedItem: any) => void
+}
+
+export type typeUseContextMenuReturn = [
+    (x: number, y: number) => void,
+    () => void,
+    typeContextMenuState]

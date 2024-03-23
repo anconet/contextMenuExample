@@ -3,7 +3,8 @@ import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 import "./global.css";
 import ContextMenu from "./contextMenu/ContextMenu";
-import { typeContextMenuState, typeContextMenuButton } from "./contextMenu/ContextMenuTypes";
+import { typeContextMenuState, typeContextMenuButton, typeUseContextMenuReturn } from "./contextMenu/ContextMenuTypes";
+import useContextMenu from "./contextMenu/useContextMenu";
 
 export default function App() {
 
@@ -23,27 +24,17 @@ export default function App() {
     // ------------------------------------------------------------------------------
     // Context Menu Config:
 
-    const initialContextMenuState: typeContextMenuState = {
-        position: { x: 0, y: 0 },
-        toggled: false
-    }
-
-    const [contextMenuState, setContextMenuState] = useState<typeContextMenuState>(initialContextMenuState)
+    const [
+        renderContextMenuState,
+        clearContextMenuState,
+        contextMenuState] = useContextMenu();
 
     function handleOnContextMenu(e: React.MouseEvent, rightClickedPerson: typePerson) {
         e.preventDefault()
         const mouseClickX = e.clientX
         const mouseClickY = e.clientY
-
-        const newContextMenuState: typeContextMenuState = { position: { x: mouseClickX, y: mouseClickY }, toggled: true }
-        setContextMenuState(newContextMenuState)
-        console.log("Right Click", rightClickedPerson.name)
-        //console.log(contextMenuAttr)
-    }
-
-    function handleClearContextMenuState(newContextMenuState: typeContextMenuState) {
-        console.log("Got to handleClearContextMenuState")
-        setContextMenuState(newContextMenuState)
+        renderContextMenuState(mouseClickX, mouseClickY)
+        console.log(mouseClickX, mouseClickY)
     }
 
     const buttons: typeContextMenuButton[] = [
@@ -56,15 +47,12 @@ export default function App() {
     function possibleContextMenu(): React.JSX.Element {
         if (contextMenuState.toggled == true) {
             return <ContextMenu
-                isToggled={contextMenuState.toggled}
-                positionX={contextMenuState.position.x}
-                positionY={contextMenuState.position.y}
+                contextMenuState={contextMenuState}
                 buttons={buttons}
-                onClearContextMenu={handleClearContextMenuState}
+                onClearContextMenu={clearContextMenuState}
                 rightClickedItem={""}
             ></ContextMenu>
         }
-
     }
 
     return <div>
