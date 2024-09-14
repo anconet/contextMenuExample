@@ -29,12 +29,18 @@ export default function useContextMenu(buttons: typeContextMenuButton[]): typeUs
         }
     }
 
+    function handleOnContextMenu(e: React.MouseEvent, rightClickedPerson: any) {
+        e.preventDefault()
+        const mouseClickX = e.clientX
+        const mouseClickY = e.clientY
+        renderContextMenu(mouseClickX, mouseClickY)
+        console.log(mouseClickX, mouseClickY)
+    }
+
     const [contextMenuState, setContextMenuState] = useState<typeContextMenuState>(initialContextMenuState)
 
     return {
-        renderContextMenu,
-        clearContextMenu,
-        possibleContextMenu,
-        contextMenuState
+        possibleContextMenu: possibleContextMenu,
+        handleOnContextMenu: handleOnContextMenu,
     }
 }

@@ -13,8 +13,6 @@ export type typeContextMenuButton = {
 }
 
 export type typeUseContextMenuReturn = {
-    renderContextMenu: (x: number, y: number) => void,
-    clearContextMenu: () => void,
     possibleContextMenu: () => React.JSX.Element,
-    contextMenuState: typeContextMenuState
+    handleOnContextMenu: (e: React.MouseEvent, rightClickedItem: any) => void,
 }

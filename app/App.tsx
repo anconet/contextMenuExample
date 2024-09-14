@@ -1,10 +1,9 @@
 'use client'
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
-import "./global.css";
-import ContextMenu from "./contextMenu/ContextMenu";
 import { typeContextMenuButton, typeUseContextMenuReturn } from "./contextMenu/ContextMenuTypes";
 import useContextMenu from "./contextMenu/useContextMenu";
+import "./global.css";
 
 export default function App() {
 
@@ -32,17 +31,9 @@ export default function App() {
     ]
 
     const {
-        renderContextMenu,
-        possibleContextMenu
+        possibleContextMenu,
+        handleOnContextMenu,
     }: typeUseContextMenuReturn = useContextMenu(buttons);
-
-    function handleOnContextMenu(e: React.MouseEvent, rightClickedPerson: typePerson) {
-        e.preventDefault()
-        const mouseClickX = e.clientX
-        const mouseClickY = e.clientY
-        renderContextMenu(mouseClickX, mouseClickY)
-        console.log(mouseClickX, mouseClickY)
-    }
 
     return <div>
         <ul>{people.map((person, index) => {
