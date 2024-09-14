@@ -10,7 +10,8 @@ export type typeContextMenuButton = {
         rightClickedItem: any) => void
 }
 
-export type typeUseContextMenuReturn = [
-    (x: number, y: number) => void,
-    () => void,
-    typeContextMenuState]
+export type typeUseContextMenuReturn = {
+    renderContextMenu: (x: number, y: number) => void,
+    clearContextMenu: () => void,
+    contextMenuState: typeContextMenuState
+}

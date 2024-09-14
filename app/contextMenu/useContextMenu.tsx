@@ -19,9 +19,9 @@ export default function useContextMenu(): typeUseContextMenuReturn {
 
     const [contextMenuState, setContextMenuState] = useState<typeContextMenuState>(initialContextMenuState)
 
-    return [
+    return {
         renderContextMenu,
         clearContextMenu,
         contextMenuState
-    ]
+    }
 }

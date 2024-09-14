@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 import "./global.css";
 import ContextMenu from "./contextMenu/ContextMenu";
-import { typeContextMenuButton } from "./contextMenu/ContextMenuTypes";
+import { typeContextMenuButton, typeUseContextMenuReturn } from "./contextMenu/ContextMenuTypes";
 import useContextMenu from "./contextMenu/useContextMenu";
 
 export default function App() {
@@ -24,10 +24,10 @@ export default function App() {
     // ------------------------------------------------------------------------------
     // Context Menu Config:
 
-    const [
+    const {
         renderContextMenu,
         clearContextMenu,
-        contextMenuState] = useContextMenu();
+        contextMenuState }: typeUseContextMenuReturn = useContextMenu();
 
     function handleOnContextMenu(e: React.MouseEvent, rightClickedPerson: typePerson) {
         e.preventDefault()
