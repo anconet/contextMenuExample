@@ -24,19 +24,6 @@ export default function App() {
     // ------------------------------------------------------------------------------
     // Context Menu Config:
 
-    const {
-        renderContextMenu,
-        clearContextMenu,
-        contextMenuState }: typeUseContextMenuReturn = useContextMenu();
-
-    function handleOnContextMenu(e: React.MouseEvent, rightClickedPerson: typePerson) {
-        e.preventDefault()
-        const mouseClickX = e.clientX
-        const mouseClickY = e.clientY
-        renderContextMenu(mouseClickX, mouseClickY)
-        console.log(mouseClickX, mouseClickY)
-    }
-
     const buttons: typeContextMenuButton[] = [
         { text: "Insert Task Above", onClick: () => { console.log("Click 0") } },
         { text: "Insert Task Below", onClick: () => { console.log("Click 1") } },
@@ -44,15 +31,17 @@ export default function App() {
         { text: "Delete Task", onClick: () => { console.log("Click 3") } }
     ]
 
-    function possibleContextMenu(): React.JSX.Element {
-        if (contextMenuState.toggled == true) {
-            return <ContextMenu
-                contextMenuState={contextMenuState}
-                buttons={buttons}
-                onClearContextMenu={clearContextMenu}
-                rightClickedItem={""}
-            ></ContextMenu>
-        }
+    const {
+        renderContextMenu,
+        possibleContextMenu
+    }: typeUseContextMenuReturn = useContextMenu(buttons);
+
+    function handleOnContextMenu(e: React.MouseEvent, rightClickedPerson: typePerson) {
+        e.preventDefault()
+        const mouseClickX = e.clientX
+        const mouseClickY = e.clientY
+        renderContextMenu(mouseClickX, mouseClickY)
+        console.log(mouseClickX, mouseClickY)
     }
 
     return <div>
