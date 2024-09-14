@@ -2,18 +2,16 @@ import { useEffect, useRef } from "react"
 import "./ContextMenu.css"
 import { typeContextMenuState, typeContextMenuButton } from "./ContextMenuTypes"
 
-type typeContextMenuProps = {
-    rightClickedItem: any,
-    contextMenuState: typeContextMenuState
+type typeContextMenuProps<T> = {
+    contextMenuState: typeContextMenuState<T>,
     buttons: typeContextMenuButton[],
     onClearContextMenu: any
 }
 
-export default function ContextMenu({
-    rightClickedItem,
+export default function ContextMenu<T>({
     contextMenuState,
     buttons,
-    onClearContextMenu }: typeContextMenuProps) {
+    onClearContextMenu }: typeContextMenuProps<T>) {
 
     const contextMenuRef = useRef(null)
 
@@ -52,7 +50,7 @@ export default function ContextMenu({
             function handleClick(e: React.MouseEvent) {
                 e.stopPropagation()
                 resetContextMenu();
-                button.onClick(e, rightClickedItem)
+                button.onClick(e, contextMenuState.rightClickedItem)
             }
 
             return <button

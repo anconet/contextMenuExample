@@ -1,18 +1,19 @@
 import React from "react"
 
-export type typeContextMenuState = {
+export type typeContextMenuState<T> = {
     position: { x: number, y: number },
-    toggled: boolean
+    toggled: boolean,
+    rightClickedItem: T
 }
 
 export type typeContextMenuButton = {
     text: string,
-    onClick: (
+    onClick: <T>(
         e: React.MouseEvent,
-        rightClickedItem: any) => void
+        rightClickedItem: T) => void
 }
 
-export type typeUseContextMenuReturn = {
+export type typeUseContextMenuReturn<T> = {
     possibleContextMenu: () => React.JSX.Element,
-    handleOnContextMenu: (e: React.MouseEvent, rightClickedItem: any) => void,
+    handleOnContextMenu: (e: React.MouseEvent, rightClickedItem: T) => void,
 }

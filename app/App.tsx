@@ -33,7 +33,7 @@ export default function App() {
     const {
         possibleContextMenu,
         handleOnContextMenu,
-    }: typeUseContextMenuReturn = useContextMenu(buttons);
+    }: typeUseContextMenuReturn<typePerson> = useContextMenu<typePerson>(buttons);
 
     return <div>
         <ul>{people.map((person, index) => {
