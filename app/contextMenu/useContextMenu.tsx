@@ -2,7 +2,7 @@ import { useState } from "react"
 import { typeContextMenuButton, typeContextMenuState, typeUseContextMenuReturn } from "./ContextMenuTypes"
 import ContextMenu from "./ContextMenu"
 
-export default function useContextMenu<T>(buttons: typeContextMenuButton[]): typeUseContextMenuReturn<T> {
+export default function useContextMenu<T>(buttons: typeContextMenuButton<T>[]): typeUseContextMenuReturn<T> {
 
     var initialRightClickedItem: T
 
@@ -36,7 +36,7 @@ export default function useContextMenu<T>(buttons: typeContextMenuButton[]): typ
         const mouseClickX = e.clientX
         const mouseClickY = e.clientY
         renderContextMenu(mouseClickX, mouseClickY, rightClickedItem)
-        console.log(mouseClickX, mouseClickY)
+        console.log(mouseClickX, mouseClickY, rightClickedItem)
     }
 
     const [contextMenuState, setContextMenuState] = useState<typeContextMenuState<T>>(initialContextMenuState)

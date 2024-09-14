@@ -23,8 +23,8 @@ export default function App() {
     // ------------------------------------------------------------------------------
     // Context Menu Config:
 
-    const buttons: typeContextMenuButton[] = [
-        { text: "Insert Task Above", onClick: () => { console.log("Click 0") } },
+    const buttons: typeContextMenuButton<typePerson>[] = [
+        { text: "Insert Task Above", onClick: (e, rightClickedItem) => { console.log("Click 0: ", rightClickedItem.name) } },
         { text: "Insert Task Below", onClick: () => { console.log("Click 1") } },
         { text: "Edit Task", onClick: () => { console.log("Click 2") } },
         { text: "Delete Task", onClick: () => { console.log("Click 3") } }

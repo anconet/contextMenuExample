@@ -4,8 +4,8 @@ import { typeContextMenuState, typeContextMenuButton } from "./ContextMenuTypes"
 
 type typeContextMenuProps<T> = {
     contextMenuState: typeContextMenuState<T>,
-    buttons: typeContextMenuButton[],
-    onClearContextMenu: any
+    buttons: typeContextMenuButton<T>[],
+    onClearContextMenu: () => void
 }
 
 export default function ContextMenu<T>({
@@ -17,7 +17,7 @@ export default function ContextMenu<T>({
 
     function resetContextMenu() {
         console.log("Got to resetContextMenu")
-        onClearContextMenu({ position: { x: 0, y: 0 }, toggled: false })
+        onClearContextMenu()
     }
 
     useEffect(
