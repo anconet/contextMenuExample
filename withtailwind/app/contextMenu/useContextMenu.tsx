@@ -2,9 +2,10 @@ import { useState } from "react"
 import { typeContextMenuButton, typeContextMenuState, typeUseContextMenuReturn } from "./ContextMenuTypes"
 import ContextMenu from "./ContextMenu"
 
+
 export default function useContextMenu<T>(buttons: typeContextMenuButton<T>[]): typeUseContextMenuReturn<T> {
 
-    var initialRightClickedItem: T
+    var initialRightClickedItem: T = null! //Couldn't find a better way to assign a variable that I won't know until runtime.
 
     const initialContextMenuState: typeContextMenuState<T> = {
         position: { x: 0, y: 0 },
@@ -28,7 +29,7 @@ export default function useContextMenu<T>(buttons: typeContextMenuButton<T>[]): 
                 buttons={buttons}
                 onClearContextMenu={clearContextMenu}
             ></ContextMenu>
-        }
+        } else return <></>
     }
 
     function handleOnContextMenu(e: React.MouseEvent, rightClickedItem: T) {
