@@ -35,13 +35,14 @@ export default function App() {
   }: typeUseContextMenuReturn<typePerson> = useContextMenu<typePerson>(buttons);
 
   return <div className="h-screen bg-slate-800 flex justify-center items-center ">
-    <ul className="w-64 flex flex-col items-stretch">{people.map((person, index) => {
-      return <li className="text-center py-4 border rounded-lg border-white hover:bg-slate-600"
-        key={index}
+    <ul className="w-64 flex flex-col items-stretch">
+      {people.map((person, index) => {
+        return <li className="text-center py-4 border rounded-lg border-white hover:bg-slate-600"
+          key={index}
 
-        onContextMenu={(e) => handleOnContextMenu(e, person)}>
-        {person.name}</li>
-    })}
+          onContextMenu={(e) => handleOnContextMenu(e, person)}>
+          {person.name}</li>
+      })}
     </ul>
     {possibleContextMenu()}
   </div>
